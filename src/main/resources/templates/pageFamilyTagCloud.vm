@@ -1,0 +1,19 @@
+
+<div class="heatmap">
+	<ul style="background-color:#f0f0f0; padding: 10px; margin: 0px; line-height: 2em;">
+	#foreach($labelCount in $labelCounts)
+	
+	#set($percent = ($labelCount.count * 100) / ($highestCount)) ##
+	#set($addition = $percent / 10)##
+	#set($size = 12 + ($addition * 2))##
+	
+	<li style="font-size:${size}px; padding: 2px;" >
+		#if($labelCount.link)##
+			<a href="$labelCount.link">$labelCount.label.getDisplayTitle()</a>
+		#else##
+			#labelLink($labelCount.label)
+		#end##
+	</li> 
+	#end
+</ul>
+</div>

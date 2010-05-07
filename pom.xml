@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>adaptavist</groupId>
+    <artifactId>pageFamilyTagCloud</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
+    <description><![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]></description>
+    
+
+    <name>Page Family Tag Cloud Plugin</name>
+    <packaging>atlassian-plugin</packaging>
+    
+    <organization>
+        <name>Adaptavist.com Ltd</name>
+        <url>http://www.adaptavist.com/</url>
+    </organization>
+
+    <properties>
+        <confluence.version>3.0</confluence.version>
+        <confluence.data.version>3.0</confluence.data.version>
+        <clover.version>2.6.3</clover.version>
+        <atlassian.plugin.key>com.adaptavist.confluence.pageFamilyTagCloud</atlassian.plugin.key>
+    </properties>
+
+    <!-- TODO: Add project description -->
+    <!--
+    <description></description>
+	<url></url>
+    -->
+
+	<developers>
+		<developer>
+			<name>Shannon Krebs</name>
+			<organization>Adaptavist</organization>
+		</developer>
+	</developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.confluence</groupId>
+            <artifactId>confluence</artifactId>
+            <version>${confluence.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.confluence.plugin</groupId>
+            <artifactId>func-test</artifactId>
+            <version>2.2-beta4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-htmlunit-plugin</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+	
+	<build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-confluence-plugin</artifactId>
+                <version>3.1-m2</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <productVersion>${confluence.version}</productVersion>
+
+                    <productDataVersion>${confluence.data.version}</productDataVersion>
+                    <finalName>${project.build.finalName}</finalName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <version>${clover.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+        
+    <distributionManagement>
+    <repository>
+        <id>nexus</id>
+        <name>Internal Releases</name>
+        <url>https://nexus.adaptavist.com/content/repositories/staff</url>
+    </repository>
+    <snapshotRepository>
+        <id>nexus</id>
+        <name>Internal Releases</name>
+        <url>https://nexus.adaptavist.com/content/repositories/staff-snapshots</url>
+    </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <developerConnection>scm:svn:https://adaptavist.jira.com/svn/PFTG/trunk</developerConnection>
+    </scm>
+
+</project>

@@ -1,0 +1,1 @@
+This code is no longer maintained and has been removed from circulation. As this has historically been open source, you can of course use subversion to retrieve the source for old versions. Adaptavist will be maintaining the code in due course through their Support service. For more information, please raise a ticket at https://tracker.adaptavist.com/
