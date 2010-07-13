@@ -1,15 +1,12 @@
 package com.adaptavist.confluence.pageFamilyTagCloud;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableSet;
 import java.util.TreeSet;
-
-import net.sf.hibernate.mapping.Collection;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
@@ -32,14 +29,14 @@ import com.atlassian.confluence.util.GeneralUtil;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
 import com.atlassian.renderer.RenderContext;
 import com.atlassian.renderer.v2.RenderMode;
-import com.atlassian.renderer.v2.macro.Macro;
+import com.atlassian.renderer.v2.macro.BaseMacro;
 import com.atlassian.renderer.v2.macro.MacroException;
 import com.atlassian.spring.container.ContainerManager;
 import com.atlassian.user.User;
 import com.opensymphony.util.TextUtils;
 
 
-public class PageFamilyTagCloudMacro implements Macro {
+public class PageFamilyTagCloudMacro extends BaseMacro {
 
 	public static final String MAX_LABELS_PARAM = "max";
 	public static final String SORT_PARAM = "sort";
