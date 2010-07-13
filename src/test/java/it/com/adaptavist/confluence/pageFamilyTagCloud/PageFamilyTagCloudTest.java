@@ -13,6 +13,8 @@ import java.util.List;
 public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
 {
     private String TESTSPACE = "TESTSPACE";
+    
+    private static final String HEATMAP_XPATH = "//div[@class='heatmap pagefamilytagcloud']";
 
     @Override
     public void setUp() throws Exception {
@@ -73,30 +75,38 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     {
         createTestData("{pagefamily-tagcloud}");
 
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        
+        
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
 
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
     }
 
     public void testIncludeRootPageLabels()
     {
         createTestData("{pagefamily-tagcloud}");
 
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
 
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
     }
 
     public void testIncludeFalseRootPageLabels()
     {
         createTestData("{pagefamily-tagcloud:includeRootPage=false}");
 
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
 
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
@@ -108,12 +118,18 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
 
         // check the sorting uses count by default
 
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
+        
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[4]");
+        
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
 
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
         assertEquals("xlabel",xLabel);
@@ -122,28 +138,39 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     public void testSortByLabel()
     {
         createTestData("{pagefamily-tagcloud:sort=label}");
+        
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[4]");
+        
 
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
 
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
         assertEquals("xlabel",xLabel);
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
     }
 
     public void testSortByCount()
     {
         createTestData("{pagefamily-tagcloud:sort=count}");
+        
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[4]");
 
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
 
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
         assertEquals("xlabel",xLabel);
@@ -153,12 +180,18 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     {
         createTestData("{pagefamily-tagcloud:sort=label|reverse=true}");
 
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
-        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+        
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[4]");
+        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[4]");
+//        String rootlabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
 
-        assertEquals("rootlabel",rootlabel);
+        assertEquals("rootlabel",rootLabel);
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
         assertEquals("xlabel",xLabel);
@@ -167,10 +200,15 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     public void testReverseSortByCount()
     {
         createTestData("{pagefamily-tagcloud:sort=count|reverse=true}");
+        
+        
+        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
 
-        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String smallLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[3]");
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[2]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
 
         assertEquals("biglabel",bigLabel);
         assertEquals("smalllabel",smallLabel);
@@ -180,8 +218,10 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     public void testMaxLabels()
     {
         createTestData("{pagefamily-tagcloud:max=1}");
+        
+        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
 
-        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+//        String bigLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
         assertEquals("biglabel",bigLabel);
         assertTextNotPresent("smalllabel");
         assertTextNotPresent("xlabel");
@@ -204,15 +244,21 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     public void testLabelLink()
     {
         createTestData("{pagefamily-tagcloud:labelLink=/test-label/%label% }");
-        String labelUrl = getElementAttributByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]/a","href");
+        
+        String labelUrl = getElementAttributByXPath(HEATMAP_XPATH + "/ul/li[1]/a","href");
         assertEquals("/test-label/biglabel",labelUrl);
+        
+//        String labelUrl = getElementAttributByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]/a","href");
+//        assertEquals("/test-label/biglabel",labelUrl);
     }
 
     public void testRootPage()
     {
         createTestData("{pagefamily-tagcloud:rootPage=Child Page 7}");
 
-        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
+        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
+        
+//        String xLabel = getElementTextByXPath("/html/body[@id='com-atlassian-confluence']/div[@id='main']/div[@id='content']/div[2]/div/ul/li[1]");
         assertEquals("xlabel",xLabel);
         assertTextNotPresent("smalllabel");
         assertTextNotPresent("biglabel");

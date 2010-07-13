@@ -1,5 +1,5 @@
 
-<div class="heatmap">
+<div class="heatmap pagefamilytagcloud">
 	<ul style="background-color:#f0f0f0; padding: 10px; margin: 0px; line-height: 2em;">
 	#foreach($labelCount in $labelCounts)
 	
