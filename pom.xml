@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>adaptavist</groupId>
     <artifactId>pageFamilyTagCloud</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.2-${svn.number}</version>
     <description><![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]></description>
     
 
@@ -23,6 +23,7 @@
         <confluence.data.version>3.0</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <atlassian.plugin.key>com.adaptavist.confluence.pageFamilyTagCloud</atlassian.plugin.key>
+        <svn.number>SNAPSHOT</svn.number>
     </properties>
 
     <!-- TODO: Add project description -->
@@ -84,8 +85,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
 
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
