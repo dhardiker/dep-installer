@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>adaptavist</groupId>
     <artifactId>pageFamilyTagCloud</artifactId>
-    <version>1.2</version>
+    <version>1.2.1-${svn.number}</version>
     <description><![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]></description>
     
 
