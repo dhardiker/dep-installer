@@ -109,7 +109,7 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         assertEquals("smalllabel",smallLabel);
         assertEquals("xlabel", xLabel);
         
-        assertTextNotPresent("rootlabel");
+        assertElementNotPresentByXPath(HEATMAP_XPATH + "/ul/li[4]");
     }
 
     public void testInvalidSortByLabel()
@@ -191,7 +191,7 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         assertEquals("biglabel",bigLabel);
         assertTextNotPresent("smalllabel");
         assertTextNotPresent("xlabel");
-        assertTextNotPresent("rootlabel");
+        assertElementNotPresentByXPath(HEATMAP_XPATH + "/ul/li[2]");
     }
 
     public void testInvalidMaxLabels(){
