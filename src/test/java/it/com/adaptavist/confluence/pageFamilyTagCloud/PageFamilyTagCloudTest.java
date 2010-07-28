@@ -112,21 +112,11 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         assertElementNotPresentByXPath(HEATMAP_XPATH + "/ul/li[4]");
     }
 
-    public void testInvalidSortByLabel()
-    {
+    public void testInvalidSortByLabel(){
         createTestData("{pagefamily-tagcloud:sort=madeup}");
 
-        // check the sorting uses count by default - not very intuitive since
-        // label sort is normally the default
-        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
-        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
-        String xLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
-        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[4]");
-        
-        assertEquals("rootlabel",rootLabel);
-        assertEquals("biglabel",bigLabel);
-        assertEquals("smalllabel",smallLabel);
-        assertEquals("xlabel",xLabel);
+        assertTextPresent("Invalid label sort param");
+        assertElementNotPresentByXPath(HEATMAP_XPATH);
     }
 
     public void testSortByLabel()

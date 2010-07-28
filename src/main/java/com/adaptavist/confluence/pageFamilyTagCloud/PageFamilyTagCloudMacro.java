@@ -84,6 +84,7 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
     }
 
 
+    
 
 
 
@@ -93,9 +94,7 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
         String rootPageId = "";
         HashMap labelCountMap = new HashMap();
 
-
-
-        String sort = MapUtils.getString(parameters, SORT_PARAM, LABEL_TEXT_SORT);
+        String sort = getSortParm(parameters); 
         boolean includeRootPage = MapUtils.getBooleanValue(parameters, INCLUDE_ROOT_PARAM, true);
         String labelLink = MapUtils.getString(parameters, LABEL_LINK_PARAM);
         int maxLabels = getMaxLabelsParam(parameters);
@@ -280,6 +279,24 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
         }
 
         return maxLabels;
+    }
+    
+    /**
+     * Helper method to validate the sort parameter
+     * 
+     * @param parameters
+     *            the map of macro parameters
+     * @return the sort parameters string, if the parameter is not specified the
+     *         default value {@link #LABEL_TEXT_SORT} will be returned.
+     * @throws MacroException
+     *             if the input param is not a valid sort
+     */
+    protected String getSortParm(Map parameters) throws MacroException{
+        String sort = MapUtils.getString(parameters, SORT_PARAM, LABEL_TEXT_SORT);
+        if(! (sort.equals(LABEL_TEXT_SORT) || sort.equals(LABEL_COUNT_SORT))){
+            throw new MacroException(ConfluenceActionSupport.getTextStatic("pageFamilyTagCloud.sortParam.invalid"));
+        }
+        return sort;
     }
 
 }
