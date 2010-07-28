@@ -221,9 +221,6 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         createTestData("{pagefamily-tagcloud:labelLink=\">Uh Oh/test-label/%label% }");
         
         assertTextNotPresent("Uh Oh");
-        
-        String labelUrl = getElementAttributByXPath(HEATMAP_XPATH + "/ul/li[1]/a","href");
-        assertEquals("\">Uh Oh/test-label/biglabel",labelUrl);
     }
 
     public void testRootPage()
