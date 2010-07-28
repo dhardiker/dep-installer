@@ -196,7 +196,7 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
 
             LabelCount labelCount = new LabelCount((Label)mapEntry.getKey(), ((Integer)mapEntry.getValue()).intValue());
             if(customLabelLink){
-                labelCount.setLink(labelLink.replaceAll("%label%", GeneralUtil.urlEncode(labelCount.getLabel().getDisplayTitle())));
+                labelCount.setLink(GeneralUtil.htmlEncode(labelLink.replaceAll("%label%", labelCount.getLabel().getDisplayTitle())));
             }
 
 

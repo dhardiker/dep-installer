@@ -195,8 +195,6 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
     }
 
     public void testInvalidMaxLabels(){
-        //TODO no labels are shown; should really display an error message
-        
         createTestData("{pagefamily-tagcloud:max=-1}");
         
         assertTextPresent("The max labels param is invalid");
@@ -212,12 +210,20 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         
     }
 
-    public void testLabelLink()
-    {
+    public void testLabelLink(){
         createTestData("{pagefamily-tagcloud:labelLink=/test-label/%label% }");
         
         String labelUrl = getElementAttributByXPath(HEATMAP_XPATH + "/ul/li[1]/a","href");
         assertEquals("/test-label/biglabel",labelUrl);
+    }
+    
+    public void testLabelLink_XSS(){
+        createTestData("{pagefamily-tagcloud:labelLink=\">Uh Oh/test-label/%label% }");
+        
+        assertTextNotPresent("Uh Oh");
+        
+        String labelUrl = getElementAttributByXPath(HEATMAP_XPATH + "/ul/li[1]/a","href");
+        assertEquals("\">Uh Oh/test-label/biglabel",labelUrl);
     }
 
     public void testRootPage()
