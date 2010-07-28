@@ -199,22 +199,16 @@ public class PageFamilyTagCloudTest extends AbstractConfluencePluginWebTestCase
         
         createTestData("{pagefamily-tagcloud:max=-1}");
         
-        assertElementPresentByXPath(HEATMAP_XPATH);
-        assertElementNotPresentByXPath(HEATMAP_XPATH + "/ul/li[1]");
-
+        assertTextPresent("The max labels param is invalid");
+        assertElementNotPresentByXPath(HEATMAP_XPATH);
     }
 
     public void testNotNumberMaxLabels()
     {
         createTestData("{pagefamily-tagcloud:max=five}");
 
-        String bigLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[1]");
-        String rootLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[2]");
-        String smallLabel = getElementTextByXPath(HEATMAP_XPATH + "/ul/li[3]");
-
-        assertEquals("biglabel",bigLabel);
-        assertEquals("smalllabel",smallLabel);
-        assertEquals("rootlabel",rootLabel);
+        assertTextPresent("The max labels param is invalid");
+        assertElementNotPresentByXPath(HEATMAP_XPATH);
         
     }
 
