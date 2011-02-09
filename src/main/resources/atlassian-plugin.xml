@@ -16,6 +16,22 @@
 		</resource>
 	</macro> 
 
+
+    <xhtml-macro key="pagefamily-tagcloud-xhtml"
+                 name="pagefamily-tagcloud"
+                 class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro">
+        <category name="confluence-content"/>
+        <parameters>
+            <parameter name="rootPage" type="string"/>
+            <parameter name="sort" type="enum" default="label">
+                <value name="label"/>
+                <value name="count"/>
+            </parameter>
+            <parameter name="reverse" type="boolean" default="false"/>
+            <parameter name="includeRootPage" type="boolean" default="true"/>
+            <parameter name="labelLink" type="string"/>
+        </parameters>
+    </xhtml-macro>
     
 
 </atlassian-plugin>

@@ -15,8 +15,12 @@ import org.apache.lucene.search.Query;
 
 import bucket.core.actions.PaginationSupport;
 
+import com.atlassian.confluence.content.render.xhtml.ConversionContext;
+import com.atlassian.confluence.content.render.xhtml.DefaultConversionContext;
 import com.atlassian.confluence.core.ConfluenceActionSupport;
 import com.atlassian.confluence.labels.Label;
+import com.atlassian.confluence.macro.Macro;
+import com.atlassian.confluence.macro.MacroExecutionException;
 import com.atlassian.confluence.pages.Page;
 import com.atlassian.confluence.pages.PageManager;
 import com.atlassian.confluence.renderer.PageContext;
@@ -36,7 +40,7 @@ import com.atlassian.user.User;
 import com.opensymphony.util.TextUtils;
 
 
-public class PageFamilyTagCloudMacro extends BaseMacro {
+public class PageFamilyTagCloudMacro extends BaseMacro implements Macro {
 
     public static final String MAX_LABELS_PARAM = "max";
     public static final String SORT_PARAM = "sort";
@@ -297,6 +301,32 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
             throw new MacroException(ConfluenceActionSupport.getTextStatic("pageFamilyTagCloud.sortParam.invalid"));
         }
         return sort;
+    }
+
+
+
+    public String execute(Map<String, String> params, String body, ConversionContext conversionContext) throws MacroExecutionException {
+        
+        try{
+            if (!(conversionContext instanceof DefaultConversionContext)){
+                return "";
+            }
+            DefaultConversionContext defaultConversionContext = (DefaultConversionContext) conversionContext;
+            RenderContext renderContext = defaultConversionContext.getRenderContext();
+
+            return execute(params, body, renderContext);
+        } catch (MacroException e){
+            throw new MacroExecutionException(e);
+        }
+    }
+
+
+    public BodyType getBodyType() {
+        return BodyType.NONE;
+    }
+
+    public OutputType getOutputType() {
+        return OutputType.BLOCK;
     }
 
 }
