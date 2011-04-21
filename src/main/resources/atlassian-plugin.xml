@@ -6,20 +6,12 @@
     </plugin-info>
     
     
-    <resource type="i18n" name="pageFamilyTagCloud-i18n" location="i18n.i18n" />		
+    <resource type="i18n" name="pageFamilyTagCloud-i18n" location="i18n.i18n" />
 
-
-	<macro name="pagefamily-tagcloud" class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro" key="pagefamilytagcloudmacro">
+	<macro name="pagefamily-tagcloud" class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro"
+           key="pagefamilytagcloudmacro" documentation-url="https://www.adaptavist.com/display/free/Page+Family+Tag+Cloud"
+           hide-body="true">
 		<description>A macro to insert a page family tag cloud into a page</description>
-		<resource type="velocity" name="help" location="templates/pageFamilyTagCloud-help.vm">
-			<param name="help-section" value="confluence"/>
-		</resource>
-	</macro> 
-
-
-    <xhtml-macro key="pagefamily-tagcloud-xhtml"
-                 name="pagefamily-tagcloud"
-                 class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro">
         <category name="confluence-content"/>
         <parameters>
             <parameter name="rootPage" type="string"/>
@@ -28,10 +20,32 @@
                 <value name="count"/>
             </parameter>
             <parameter name="reverse" type="boolean" default="false"/>
+            <parameter name="max" type="int" default="25" />
+            <parameter name="includeRootPage" type="boolean" default="true"/>
+            <parameter name="labelLink" type="string"/>
+        </parameters>
+		<resource type="velocity" name="help" location="templates/pageFamilyTagCloud-help.vm">
+			<param name="help-section" value="confluence"/>
+		</resource>
+	</macro>
+
+    <xhtml-macro key="pagefamily-tagcloud-xhtml"
+                 name="pagefamily-tagcloud"
+                 class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro"
+                 documentation-url="https://www.adaptavist.com/display/free/Page+Family+Tag+Cloud"
+                 hide-body="true">
+        <category name="confluence-content"/>
+        <parameters>
+            <parameter name="rootPage" type="string"/>
+            <parameter name="sort" type="enum" default="label">
+                <value name="label"/>
+                <value name="count"/>
+            </parameter>
+            <parameter name="reverse" type="boolean" default="false"/>
+            <parameter name="max" type="int" default="25" />
             <parameter name="includeRootPage" type="boolean" default="true"/>
             <parameter name="labelLink" type="string"/>
         </parameters>
     </xhtml-macro>
-    
 
 </atlassian-plugin>
