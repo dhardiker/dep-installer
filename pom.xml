@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-
     <modelVersion>4.0.0</modelVersion>
-    <groupId>adaptavist</groupId>
+    <groupId>com.adaptavist.confluence</groupId>
     <artifactId>pageFamilyTagCloud</artifactId>
-    <version>1.3-${svn.number}</version>
-    <description><![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]></description>
-    
+    <version>1.3-SNAPSHOT</version>
+    <description>
+        <![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]>
+    </description>
 
     <name>Page Family Tag Cloud Plugin</name>
     <packaging>atlassian-plugin</packaging>
@@ -20,18 +19,11 @@
 
     <properties>
         <atlassian.plugin.key>com.adaptavist.confluence.pageFamilyTagCloud</atlassian.plugin.key>
-        <confluence.version>4.0-m15a</confluence.version>
+        <confluence.version>4.0-m19</confluence.version>
         <confluence.data.version>3.2</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <confluence.func-test>2.3</confluence.func-test>
-        <svn.number>SNAPSHOT</svn.number>
     </properties>
-
-    <!-- TODO: Add project description -->
-    <!--
-    <description></description>
-	<url></url>
-    -->
 
 	<developers>
 		<developer>
@@ -72,23 +64,7 @@
             <version>1.9.12</version>
             <scope>test</scope>
         </dependency>
-        <!--
-        
-        
         <dependency>
-            <groupId>com.atlassian.confluence.plugin</groupId>
-            <artifactId>func-test</artifactId>
-            <version>2.2-beta4</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-        <!--<dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-htmlunit-plugin</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-        </dependency>
-        --><dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.7</version>
@@ -98,22 +74,116 @@
 	
 	<build>
         <plugins>
-
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-confluence-plugin</artifactId>
-                <version>3.1-m2</version>
+                <version>3.4-AMPS405</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${confluence.version}</productVersion>
                     <productDataVersion>${confluence.data.version}</productDataVersion>
                     <finalName>${project.build.finalName}</finalName>
+                    <products>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence3-1</instanceId>
+                            <version>3.1</version>
+                            <dataVersion>3.1</dataVersion>
+                        </product>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence3-2</instanceId>
+                            <version>3.2.2</version>
+                            <dataVersion>3.1</dataVersion>
+                        </product>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence3-3</instanceId>
+                            <version>3.3.3</version>
+                            <dataVersion>3.2</dataVersion>
+                        </product>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence3-4</instanceId>
+                            <version>3.4.9</version>
+                            <dataVersion>3.2</dataVersion>
+                        </product>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence3-5</instanceId>
+                            <version>3.5</version>
+                            <dataVersion>3.5</dataVersion>
+                        </product>
+                        <product>
+                            <id>confluence</id>
+                            <instanceId>confluence4-0</instanceId>
+                            <version>4.0-m19</version>
+                            <dataVersion>3.5</dataVersion>
+                        </product>
+                    </products>
+                    <testGroups>
+                        <testGroup>
+                            <id>confluence3-1</id>
+                            <productIds>
+                                <productId>confluence3-1</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                        <testGroup>
+                            <id>confluence3-2</id>
+                            <productIds>
+                                <productId>confluence3-2</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                        <testGroup>
+                            <id>confluence3-3</id>
+                            <productIds>
+                                <productId>confluence3-3</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                        <testGroup>
+                            <id>confluence3-4</id>
+                            <productIds>
+                                <productId>confluence3-4</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                        <testGroup>
+                            <id>confluence3-5</id>
+                            <productIds>
+                                <productId>confluence3-5</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                        <testGroup>
+                            <id>confluence4-0</id>
+                            <productIds>
+                                <productId>confluence4-0</productId>
+                            </productIds>
+                            <includes>
+                                <include>it/**</include>
+                            </includes>
+                        </testGroup>
+                    </testGroups>
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>true</inherited>
                 <configuration>
-
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
@@ -127,16 +197,16 @@
     </build>
         
     <distributionManagement>
-    <repository>
-        <id>nexus</id>
-        <name>Internal Releases</name>
-        <url>https://nexus.adaptavist.com/content/repositories/staff</url>
-    </repository>
-    <snapshotRepository>
-        <id>nexus</id>
-        <name>Internal Releases</name>
-        <url>https://nexus.adaptavist.com/content/repositories/staff-snapshots</url>
-    </snapshotRepository>
+        <repository>
+            <id>nexus</id>
+            <name>Internal Releases</name>
+            <url>https://nexus.adaptavist.com/content/repositories/adaptavist</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Internal Releases</name>
+            <url>https://nexus.adaptavist.com/content/repositories/adaptavist-snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <scm>
