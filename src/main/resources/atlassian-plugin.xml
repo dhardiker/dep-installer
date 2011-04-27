@@ -1,4 +1,4 @@
-<atlassian-plugin key="${atlassian.plugin.key}" name="${pom.name}">
+<atlassian-plugin key="${atlassian.plugin.key}" name="${pom.name}" plugins-version="2">
     <plugin-info>
         <description><![CDATA[${pom.description}]]></description>
         <version>${pom.version}</version>
@@ -31,7 +31,7 @@
 
     <xhtml-macro key="pagefamily-tagcloud-xhtml"
                  name="pagefamily-tagcloud"
-                 class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro"
+                 class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro4"
                  documentation-url="https://www.adaptavist.com/display/free/Page+Family+Tag+Cloud"
                  hide-body="true">
         <category name="confluence-content"/>

@@ -1,8 +1,12 @@
 package com.adaptavist.confluence.pageFamilyTagCloud;
 
 import bucket.core.actions.PaginationSupport;
+import com.atlassian.confluence.content.render.xhtml.ConversionContext;
+import com.atlassian.confluence.content.render.xhtml.DefaultConversionContext;
 import com.atlassian.confluence.core.ConfluenceActionSupport;
 import com.atlassian.confluence.labels.Label;
+import com.atlassian.confluence.macro.Macro;
+import com.atlassian.confluence.macro.MacroExecutionException;
 import com.atlassian.confluence.pages.Page;
 import com.atlassian.confluence.pages.PageManager;
 import com.atlassian.confluence.renderer.PageContext;
@@ -29,7 +33,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class PageFamilyTagCloudMacro extends BaseMacro {
+public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
 
     public static final String MAX_LABELS_PARAM = "max";
     public static final String SORT_PARAM = "sort";
@@ -49,7 +53,7 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
     private PageManager pageManager;
 
 
-    private static final Logger log = Logger.getLogger(PageFamilyTagCloudMacro.class);
+    private static final Logger log = Logger.getLogger(PageFamilyTagCloudMacro4.class);
 
 
     private int highestCount = 1;
@@ -77,13 +81,17 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
     }
 
 
+
+
+
+
     public String execute(Map parameters, String body, RenderContext renderContext)	throws MacroException {
 
 
         String rootPageId = "";
         HashMap labelCountMap = new HashMap();
 
-        String sort = getSortParm(parameters); 
+        String sort = getSortParm(parameters);
         boolean includeRootPage = MapUtils.getBooleanValue(parameters, INCLUDE_ROOT_PARAM, true);
         String labelLink = MapUtils.getString(parameters, LABEL_LINK_PARAM);
         int maxLabels = getMaxLabelsParam(parameters);
@@ -245,12 +253,12 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
 
     /**
      * Helper method to validate the max labels parameter.
-     * 
+     *
      * @param parameters
      *            the map of macro parameters
      * @return the int value for the max labels param, or the default 25 if not
      *         specified.
-     * @throws MacroException
+     * @throws com.atlassian.renderer.v2.macro.MacroException
      *             if the input param is not a valid integer or is less then
      *             zero.
      */
@@ -269,15 +277,15 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
 
         return maxLabels;
     }
-    
+
     /**
      * Helper method to validate the sort parameter
-     * 
+     *
      * @param parameters
      *            the map of macro parameters
      * @return the sort parameters string, if the parameter is not specified the
      *         default value {@link #LABEL_TEXT_SORT} will be returned.
-     * @throws MacroException
+     * @throws com.atlassian.renderer.v2.macro.MacroException
      *             if the input param is not a valid sort
      */
     protected String getSortParm(Map parameters) throws MacroException{
@@ -290,7 +298,6 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
 
 
 
-/*
     public String execute(Map<String, String> params, String body, ConversionContext conversionContext) throws MacroExecutionException {
         
         try{
@@ -305,15 +312,14 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
             throw new MacroExecutionException(e);
         }
     }
-*/
 
 
-/*    public BodyType getBodyType() {
+    public BodyType getBodyType() {
         return BodyType.NONE;
     }
 
     public OutputType getOutputType() {
         return OutputType.BLOCK;
-    }*/
+    }
 
 }
