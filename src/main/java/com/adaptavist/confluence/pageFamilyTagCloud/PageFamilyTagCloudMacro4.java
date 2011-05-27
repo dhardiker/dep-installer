@@ -15,8 +15,10 @@ import com.atlassian.confluence.search.actions.SearchBean;
 import com.atlassian.confluence.search.actions.SearchQueryBean;
 import com.atlassian.confluence.search.actions.SearchResultWithExcerpt;
 import com.atlassian.confluence.user.AuthenticatedUserThreadLocal;
+import com.atlassian.confluence.user.UserAccessor;
 import com.atlassian.confluence.util.GeneralUtil;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
+import com.atlassian.plm.service.ReflectionLicenseServiceTracker;
 import com.atlassian.renderer.RenderContext;
 import com.atlassian.renderer.v2.RenderMode;
 import com.atlassian.renderer.v2.macro.BaseMacro;
@@ -49,9 +51,9 @@ public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
 
     public static final String LABEL_LINK_PARAM = "labelLink";
 
-
     private PageManager pageManager;
-
+    protected ReflectionLicenseServiceTracker licenseServiceTracker;
+    protected UserAccessor userAccessor;
 
     private static final Logger log = Logger.getLogger(PageFamilyTagCloudMacro4.class);
 
@@ -80,13 +82,31 @@ public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
         }
     }
 
+    public void setUserAccessor(UserAccessor userAccessor) {
+        this.userAccessor = userAccessor;
+    }
 
+    public void setLicenseServiceTracker(ReflectionLicenseServiceTracker licenseServiceTracker) {
+        this.licenseServiceTracker = licenseServiceTracker;
+    }
 
+    protected boolean isLicensed() {
+        return licenseServiceTracker.isLicensed();
+    }
 
-
+    protected String unlicensed() throws MacroException {
+        if (userAccessor.isSuperUser(AuthenticatedUserThreadLocal.getUser()) ) {
+            return VelocityUtils.getRenderedTemplate("templates/unlicensed.vm", MacroUtils.defaultVelocityContext());
+        } else {
+            return "";
+        }
+    }
 
     public String execute(Map parameters, String body, RenderContext renderContext)	throws MacroException {
-
+        if (!isLicensed()) {
+            log.debug("Page Family Tag Cloud Plugin is unlicensed");
+            return unlicensed();
+        }
 
         String rootPageId = "";
         HashMap labelCountMap = new HashMap();

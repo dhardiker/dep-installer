@@ -23,6 +23,7 @@
         <confluence.data.version>3.2</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <confluence.func-test>2.3</confluence.func-test>
+        <plm.version>0.5-SNAPSHOT</plm.version>
     </properties>
 
 	<developers>
@@ -70,6 +71,30 @@
             <version>4.7</version>
             <scope>test</scope>
         </dependency>
+        <!-- PLM -->
+        <dependency>
+            <groupId>com.atlassian.plugin.licensing</groupId>
+            <artifactId>plm-plugin-common</artifactId>
+            <version>${plm.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugin.licensing</groupId>
+            <artifactId>plm-api</artifactId>
+            <version>${plm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <!--this is only here for the obr generation-->
+            <groupId>com.atlassian.plugin.licensing</groupId>
+            <artifactId>plm-plugin</artifactId>
+            <version>${plm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adaptavist.licensing.cert</groupId>
+            <artifactId>ca-adaptavist-pem</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 	
 	<build>
@@ -83,6 +108,26 @@
                     <productVersion>${confluence.version}</productVersion>
                     <productDataVersion>${confluence.data.version}</productDataVersion>
                     <finalName>${project.build.finalName}</finalName>
+
+                    <systemPropertyVariables>
+                        <plm.license.dir>${project.build.directory}/license/licenses</plm.license.dir>
+                    </systemPropertyVariables>
+
+                    <pluginDependencies>
+                        <pluginDependency>
+                            <groupId>com.atlassian.plugin.licensing</groupId>
+                            <artifactId>plm-plugin</artifactId>
+                        </pluginDependency>
+                    </pluginDependencies>
+
+                    <pluginArtifacts>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.plugin.licensing</groupId>
+                            <artifactId>plm-plugin</artifactId>
+                            <version>${plm.version}</version>
+                        </pluginArtifact>
+                    </pluginArtifacts>
+
                     <products>
                         <product>
                             <id>confluence</id>
@@ -192,6 +237,34 @@
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-clover2-plugin</artifactId>
                 <version>${clover.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-plm-license-plugin</artifactId>
+                <version>${plm.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-license</id>
+                        <goals>
+                            <goal>generate-license</goal>
+                            <goal>restore-package</goal>
+                            <goal>restore-verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <vendors>
+                        <vendor>
+                            <certificateName>com/adaptavist/licensing/cert/ca-adaptavist.pem</certificateName>
+                            <licenses>
+                                <license>
+                                    <key>${project.groupId}.${project.artifactId}</key>
+                                    <key>com.adaptavist.plugin-pack-1</key>
+                                </license>
+                            </licenses>
+                        </vendor>
+                    </vendors>
+                </configuration>
             </plugin>
         </plugins>
     </build>
