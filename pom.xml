@@ -262,7 +262,7 @@
                                     <duration>30</duration>
                                     <startOffset>-35</startOffset>
                                     <metadata>
-                                        <plmGraceDays>2</plmGraceDays>
+                                        <plmGraceDays>10</plmGraceDays>
                                         <plmExpiryWarnDays>10</plmExpiryWarnDays>
                                     </metadata>
                                 </license>
