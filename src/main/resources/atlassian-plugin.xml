@@ -7,25 +7,27 @@
         <param name="licenseAcquireUrl">https://licensing.adaptavist.com/acquire</param>
         <param name="licenseAcquirePrivacyUrl">http://licensing.adaptavist.com/privacy</param>
         <bundle-instructions>
-            <DynamicImport-Package>com.atlassian.plm.api</DynamicImport-Package>
+            <DynamicImport-Package>com.adaptavist.plm.api</DynamicImport-Package>
         </bundle-instructions>
     </plugin-info>
 
+
     <resource type="i18n" name="pageFamilyTagCloud-i18n" location="i18n.i18n" />
 
-    <license key="pack-license" family="com.adaptavist.plugin-pack-1" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.atlassian.plm.api.License" />
-    <license key="product-license" family="${project.groupId}.${project.artifactId}" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.atlassian.plm.api.License" />
+    <!-- Licensing -->
+    <license key="pack-license" name="Plugin Pack License" family="com.adaptavist.plugin-pack-1" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.adaptavist.plm.api.License" />
+    <license key="product-license" name="License" family="${project.groupId}.${project.artifactId}" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.adaptavist.plm.api.License" />
 
-    <license-request-detail key="plmServerId" class="com.atlassian.plugin.licensing.details.ServerId" />
-    <license-request-detail key="plmEmailAddress" class="com.atlassian.plugin.licensing.details.EmailAddress" />
-    <license-request-detail key="plmLicenseType" class="com.atlassian.plugin.licensing.details.LicenseType" />
-    <license-request-detail key="plmLicensedOrg" class="com.atlassian.plugin.licensing.details.OrganisationName" />
-    <license-request-detail key="plmApplication" class="com.atlassian.plugin.licensing.details.ApplicationName" />
-    <license-request-detail key="plmLicensedUsers" class="com.atlassian.plugin.licensing.details.UserLimit" />
-    <license-request-detail key="plmCommonName" class="com.atlassian.plugin.licensing.details.UserFullname" />
-    <license-request-detail key="plmCountryCode" class="com.atlassian.plugin.licensing.details.CountryCode" />
+    <license-request-detail key="plmServerId" class="com.adaptavist.plm.plugin.licensing.details.ServerId" name="" />
+    <license-request-detail key="plmEmailAddress" class="com.adaptavist.plm.plugin.licensing.details.EmailAddress" name="" />
+    <license-request-detail key="plmLicenseType" class="com.adaptavist.plm.plugin.licensing.details.LicenseType" name="" />
+    <license-request-detail key="plmLicensedOrg" class="com.adaptavist.plm.plugin.licensing.details.OrganisationName" name="" />
+    <license-request-detail key="plmApplication" class="com.adaptavist.plm.plugin.licensing.details.ApplicationName" name="" />
+    <license-request-detail key="plmLicensedUsers" class="com.adaptavist.plm.plugin.licensing.details.UserLimit" name="" />
+    <license-request-detail key="plmCommonName" class="com.adaptavist.plm.plugin.licensing.details.UserFullname" name="" />
+    <license-request-detail key="plmCountryCode" class="com.adaptavist.plm.plugin.licensing.details.CountryCode" name="" />
 
-    <component name="licenseServiceTracker" key="licenseServiceTracker" class="com.atlassian.plm.service.ReflectionLicenseServiceTracker" />
+    <component name="licenseServiceTracker" key="licenseServiceTracker" class="com.adaptavist.plm.service.DefaultLicenseServiceTracker" />
 
 	<macro name="pagefamily-tagcloud" class="com.adaptavist.confluence.pageFamilyTagCloud.PageFamilyTagCloudMacro"
            key="pagefamilytagcloudmacro" documentation-url="https://www.adaptavist.com/display/free/Page+Family+Tag+Cloud"

@@ -23,7 +23,7 @@
         <confluence.data.version>3.2</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <confluence.func-test>2.3</confluence.func-test>
-        <plm.version>0.5-SNAPSHOT</plm.version>
+        <plm.version>0.5</plm.version>
     </properties>
 
 	<developers>
@@ -73,19 +73,19 @@
         </dependency>
         <!-- PLM -->
         <dependency>
-            <groupId>com.atlassian.plugin.licensing</groupId>
+            <groupId>com.adaptavist.plm.plugin</groupId>
             <artifactId>plm-plugin-common</artifactId>
             <version>${plm.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.plugin.licensing</groupId>
+            <groupId>com.adaptavist.plm.plugin</groupId>
             <artifactId>plm-api</artifactId>
             <version>${plm.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <!--this is only here for the obr generation-->
-            <groupId>com.atlassian.plugin.licensing</groupId>
+            <groupId>com.adaptavist.plm.plugin</groupId>
             <artifactId>plm-plugin</artifactId>
             <version>${plm.version}</version>
             <scope>provided</scope>
@@ -115,14 +115,14 @@
 
                     <pluginDependencies>
                         <pluginDependency>
-                            <groupId>com.atlassian.plugin.licensing</groupId>
+                            <groupId>com.adaptavist.plm.plugin</groupId>
                             <artifactId>plm-plugin</artifactId>
                         </pluginDependency>
                     </pluginDependencies>
 
                     <pluginArtifacts>
                         <pluginArtifact>
-                            <groupId>com.atlassian.plugin.licensing</groupId>
+                            <groupId>com.adaptavist.plm.plugin</groupId>
                             <artifactId>plm-plugin</artifactId>
                             <version>${plm.version}</version>
                         </pluginArtifact>
@@ -239,9 +239,9 @@
                 <version>${clover.version}</version>
             </plugin>
             <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
+                <groupId>com.adaptavist.plm.maven</groupId>
                 <artifactId>maven-plm-license-plugin</artifactId>
-                <version>${plm.version}</version>
+                <version>0.6-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>generate-license</id>
@@ -258,8 +258,13 @@
                             <certificateName>com/adaptavist/licensing/cert/ca-adaptavist.pem</certificateName>
                             <licenses>
                                 <license>
-                                    <key>${project.groupId}.${project.artifactId}</key>
                                     <key>com.adaptavist.plugin-pack-1</key>
+                                    <duration>30</duration>
+                                    <startOffset>-35</startOffset>
+                                    <metadata>
+                                        <plmGraceDays>2</plmGraceDays>
+                                        <plmExpiryWarnDays>10</plmExpiryWarnDays>
+                                    </metadata>
                                 </license>
                             </licenses>
                         </vendor>

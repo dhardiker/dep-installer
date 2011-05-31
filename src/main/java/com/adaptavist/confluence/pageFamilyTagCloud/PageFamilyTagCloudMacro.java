@@ -1,6 +1,10 @@
 package com.adaptavist.confluence.pageFamilyTagCloud;
 
 import bucket.core.actions.PaginationSupport;
+import com.adaptavist.plm.api.License;
+import com.adaptavist.plm.api.LicensingState;
+import com.adaptavist.plm.api.PluginLicenseService;
+import com.adaptavist.plm.service.LicenseServiceTracker;
 import com.atlassian.confluence.core.ConfluenceActionSupport;
 import com.atlassian.confluence.labels.Label;
 import com.atlassian.confluence.pages.Page;
@@ -10,11 +14,12 @@ import com.atlassian.confluence.renderer.radeox.macros.MacroUtils;
 import com.atlassian.confluence.search.actions.SearchBean;
 import com.atlassian.confluence.search.actions.SearchQueryBean;
 import com.atlassian.confluence.search.actions.SearchResultWithExcerpt;
+import com.atlassian.confluence.setup.BootstrapManager;
+import com.atlassian.confluence.setup.settings.SettingsManager;
 import com.atlassian.confluence.user.AuthenticatedUserThreadLocal;
 import com.atlassian.confluence.user.UserAccessor;
 import com.atlassian.confluence.util.GeneralUtil;
 import com.atlassian.confluence.util.velocity.VelocityUtils;
-import com.atlassian.plm.service.ReflectionLicenseServiceTracker;
 import com.atlassian.renderer.RenderContext;
 import com.atlassian.renderer.v2.RenderMode;
 import com.atlassian.renderer.v2.macro.BaseMacro;
@@ -48,13 +53,15 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
     public static final String LABEL_LINK_PARAM = "labelLink";
 
     private PageManager pageManager;
-    protected ReflectionLicenseServiceTracker licenseServiceTracker;
+    protected LicenseServiceTracker licenseServiceTracker;
     protected UserAccessor userAccessor;
+    protected SettingsManager   settingsManager;
 
     private static final Logger log = Logger.getLogger(PageFamilyTagCloudMacro.class);
 
 
     private int highestCount = 1;
+    private PluginLicenseService pluginLicenseService;
 
     private void updateLabelCount(List labels, Map labelCount){
 
@@ -82,24 +89,41 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
         this.userAccessor = userAccessor;
     }
 
-    public void setLicenseServiceTracker(ReflectionLicenseServiceTracker licenseServiceTracker) {
+    public void setLicenseServiceTracker(LicenseServiceTracker licenseServiceTracker) {
         this.licenseServiceTracker = licenseServiceTracker;
+        pluginLicenseService = (PluginLicenseService) licenseServiceTracker.getPluginLicenseService();
     }
 
     protected boolean isLicensed() {
-        return licenseServiceTracker.isLicensed();
+        return licenseServiceTracker.isServicePresent() && licenseServiceTracker.isLicensed();
+    }
+
+    protected boolean isGracePeriod(){
+
+        LicensingState state = pluginLicenseService.getPluginLicensing().getPeriod().getState();
+        return state.equals(LicensingState.IN_GRACE);
+    }
+
+    protected  String getLicenseName(){
+        Iterator<License> i = pluginLicenseService.getPluginLicensing().getCurrentLicenses().iterator();
+        if ( i.hasNext() )
+            return i.next().getMetadata().get( "plmProductName" );
+        return "";
     }
 
     protected String unlicensed() throws MacroException {
         if (userAccessor.isSuperUser(AuthenticatedUserThreadLocal.getUser()) ) {
-            return VelocityUtils.getRenderedTemplate("templates/unlicensed.vm", MacroUtils.defaultVelocityContext());
+            Map contextMap = MacroUtils.defaultVelocityContext();
+            contextMap.put("licenseName", getLicenseName() );
+            contextMap.put("baseUrl", settingsManager.getGlobalSettings().getBaseUrl());
+            return VelocityUtils.getRenderedTemplate("templates/unlicensed.vm", contextMap);
         } else {
             return "";
         }
     }
 
     public String execute(Map parameters, String body, RenderContext renderContext)	throws MacroException {
-        if (!isLicensed()) {
+        if (!isLicensed() && !isGracePeriod() ) {
             log.debug("Page Family Tag Cloud Plugin is unlicensed");
             return unlicensed();
         }
@@ -293,7 +317,8 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
 
         return maxLabels;
     }
-    
+
+
     /**
      * Helper method to validate the sort parameter
      * 
@@ -312,7 +337,9 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
         return sort;
     }
 
-
+    public void setSettingsManager(SettingsManager settingsManager) {
+        this.settingsManager = settingsManager;
+    }
 
 /*
     public String execute(Map<String, String> params, String body, ConversionContext conversionContext) throws MacroExecutionException {
