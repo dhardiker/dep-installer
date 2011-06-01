@@ -23,7 +23,7 @@
         <confluence.data.version>3.2</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <confluence.func-test>2.3</confluence.func-test>
-        <plm.version>0.5</plm.version>
+        <plm.version>0.5.1</plm.version>
     </properties>
 
 	<developers>
@@ -241,7 +241,7 @@
             <plugin>
                 <groupId>com.adaptavist.plm.maven</groupId>
                 <artifactId>maven-plm-license-plugin</artifactId>
-                <version>0.6-SNAPSHOT</version>
+                <version>${plm.version}</version>
                 <executions>
                     <execution>
                         <id>generate-license</id>

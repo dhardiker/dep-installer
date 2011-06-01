@@ -63,7 +63,6 @@ public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
 
 
     private int highestCount = 1;
-    private PluginLicenseService pluginLicenseService;
     protected SettingsManager settingsManager;
 
     private void updateLabelCount(List labels, Map labelCount){
@@ -94,21 +93,20 @@ public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
 
     public void setLicenseServiceTracker(LicenseServiceTracker licenseServiceTracker) {
         this.licenseServiceTracker = licenseServiceTracker;
-        pluginLicenseService = (PluginLicenseService) licenseServiceTracker.getPluginLicenseService();
     }
 
     protected boolean isLicensed() {
-        return licenseServiceTracker.isServicePresent() && licenseServiceTracker.isLicensed();
+        return  licenseServiceTracker.isLicensed();
     }
 
     protected boolean isGracePeriod(){
 
-        LicensingState state = pluginLicenseService.getPluginLicensing().getPeriod().getState();
+        LicensingState state = ((PluginLicenseService)licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getPeriod().getState();
         return state.equals(LicensingState.IN_GRACE);
     }
 
     protected  String getLicenseName(){
-        Iterator<License> i = pluginLicenseService.getPluginLicensing().getCurrentLicenses().iterator();
+        Iterator<License> i = ((PluginLicenseService)licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getCurrentLicenses().iterator();
         if ( i.hasNext() )
             return i.next().getMetadata().get( "plmProductName" );
         return "";

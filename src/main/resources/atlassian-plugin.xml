@@ -15,7 +15,7 @@
     <resource type="i18n" name="pageFamilyTagCloud-i18n" location="i18n.i18n" />
 
     <!-- Licensing -->
-    <license key="pack-license" name="Plugin Pack License" family="com.adaptavist.plugin-pack-1" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.adaptavist.plm.api.License" />
+    <license key="pack-license" name="Plugin Pack License" family="com.adaptavist.plugin-pack" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.adaptavist.plm.api.License" />
     <license key="product-license" name="License" family="${project.groupId}.${project.artifactId}" vendor="com/adaptavist/licensing/cert/ca-adaptavist.pem" class="com.adaptavist.plm.api.License" />
 
     <license-request-detail key="plmServerId" class="com.adaptavist.plm.plugin.licensing.details.ServerId" name="" />
