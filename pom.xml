@@ -258,7 +258,7 @@
                             <certificateName>com/adaptavist/licensing/cert/ca-adaptavist.pem</certificateName>
                             <licenses>
                                 <license>
-                                    <key>com.adaptavist.plugin-pack-1</key>
+                                    <key>com.adaptavist.plugin-pack</key>
                                     <duration>30</duration>
                                     <startOffset>-35</startOffset>
                                     <metadata>
