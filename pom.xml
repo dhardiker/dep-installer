@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adaptavist.confluence</groupId>
     <artifactId>pageFamilyTagCloud</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2-SNAPSHOT</version>
     <description>
         <![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]>
     </description>
@@ -288,7 +288,7 @@
     </distributionManagement>
 
     <scm>
-        <developerConnection>scm:svn:https://adaptavist.jira.com/svn/PFTG/tags/pageFamilyTagCloud-1.2.1</developerConnection>
+        <developerConnection>scm:svn:https://adaptavist.jira.com/svn/PFTG/trunk</developerConnection>
     </scm>
 
 </project>
