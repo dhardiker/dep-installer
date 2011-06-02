@@ -38,6 +38,9 @@ import org.apache.lucene.search.Query;
 import java.io.IOException;
 import java.util.*;
 
+import static com.atlassian.confluence.core.ConfluenceActionSupport.getTextStatic;
+import static com.atlassian.confluence.util.GeneralUtil.getGlobalSettings;
+
 
 public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
 
@@ -99,33 +102,27 @@ public class PageFamilyTagCloudMacro4 extends BaseMacro implements  Macro {
         return  licenseServiceTracker.isLicensed();
     }
 
-    protected boolean isGracePeriod(){
-
-        LicensingState state = ((PluginLicenseService)licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getPeriod().getState();
-        return state.equals(LicensingState.IN_GRACE);
-    }
-
-    protected  String getLicenseName(){
-        Iterator<License> i = ((PluginLicenseService)licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getCurrentLicenses().iterator();
-        if ( i.hasNext() )
-            return i.next().getMetadata().get( "plmProductName" );
-        return "";
+    private String getMessage() {
+        if (!licenseServiceTracker.isServicePresent()) {
+            return getTextStatic("license.noplm");
+        }
+        if (((PluginLicenseService) licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getLicenses().isEmpty()) {
+            return getTextStatic("license.no-license", new String[]{getGlobalSettings().getBaseUrl()});
+        }
+        return getTextStatic("license.expired", new String[]{getGlobalSettings().getBaseUrl()});
     }
 
     protected String unlicensed() throws MacroException {
         if (userAccessor.isSuperUser(AuthenticatedUserThreadLocal.getUser()) ) {
-            Map contextMap = MacroUtils.defaultVelocityContext();
-            contextMap.put("licenseName", getLicenseName() );
-            contextMap.put("baseUrl", settingsManager.getGlobalSettings().getBaseUrl());
-            return VelocityUtils.getRenderedTemplate("templates/unlicensed.vm", contextMap);
+            return getMessage();
         } else {
             return "";
         }
     }
 
     public String execute(Map parameters, String body, RenderContext renderContext)	throws MacroException {
-        if (!isLicensed() && !isGracePeriod() ) {
-            log.debug("Page Family Tag Cloud Plugin is unlicensed");
+        if (!isLicensed()) {
+            log.warn("Page Family Tag Cloud Plugin is unlicensed");
             return unlicensed();
         }
 
