@@ -97,13 +97,17 @@ public class PageFamilyTagCloudMacro extends BaseMacro {
     }
 
     private String getMessage() {
-        if (!licenseServiceTracker.isServicePresent()) {
-            return getTextStatic("license.noplm");
-        }
-        if (((PluginLicenseService) licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getLicenses().isEmpty()) {
+        try {
+            if (!licenseServiceTracker.isServicePresent()) {
+                return getTextStatic("license.noplm");
+            }
+            if (((PluginLicenseService) licenseServiceTracker.getPluginLicenseService()).getPluginLicensing().getLicenses().isEmpty()) {
+                return getTextStatic("license.no-license", new String[]{getGlobalSettings().getBaseUrl()});
+            }
+            return getTextStatic("license.expired", new String[]{getGlobalSettings().getBaseUrl()});
+        } catch (Exception e) {
             return getTextStatic("license.no-license", new String[]{getGlobalSettings().getBaseUrl()});
         }
-        return getTextStatic("license.expired", new String[]{getGlobalSettings().getBaseUrl()});
     }
 
     protected String unlicensed() throws MacroException {
