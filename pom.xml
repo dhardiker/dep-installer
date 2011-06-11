@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.adaptavist.confluence</groupId>
-    <artifactId>pageFamilyTagCloud</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <groupId>com.adaptavist.amps</groupId>
+    <artifactId>dependency-installer</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <description>
-        <![CDATA[<b>Page Familiy Tag Cloud Macro Plugin</b> - This plugin contains a macro to build a tag cloud using the labels from a page hierachy rather then a complete site/space.]]>
+        <![CDATA[Provides a library for installing bundles/plugins required for running. It's planned that this library will be superseded by functionality within the UPM / PLUG in the future. This library will cease to be maintained once all versions of support Atlassian products that have not been EOLed contain the ability to tackle the same problem that this library solves.]]>
     </description>
 
-    <name>Page Family Tag Cloud Plugin</name>
-    <packaging>atlassian-plugin</packaging>
+    <name>Adaptavist Dependency Installer</name>
+    <packaging>jar</packaging>
     
     <organization>
         <name>Adaptavist.com Ltd</name>
@@ -18,9 +18,9 @@
     </organization>
 
     <properties>
-        <atlassian.plugin.key>com.adaptavist.confluence.pageFamilyTagCloud</atlassian.plugin.key>
-        <confluence.version>4.0-m19</confluence.version>
-        <confluence.data.version>3.2</confluence.data.version>
+        <atlassian.plugin.key>com.adaptavist.amps.dependency-installer</atlassian.plugin.key>
+        <confluence.version>3.1</confluence.version>
+        <confluence.data.version>3.1</confluence.data.version>
         <clover.version>2.6.3</clover.version>
         <confluence.func-test>2.3</confluence.func-test>
         <plm.version>0.5.1</plm.version>
@@ -28,7 +28,11 @@
 
 	<developers>
 		<developer>
-			<name>Shannon Krebs</name>
+			<name>Dan Hardiker</name>
+			<organization>Adaptavist</organization>
+		</developer>
+		<developer>
+			<name>Jon Mort</name>
 			<organization>Adaptavist</organization>
 		</developer>
 	</developers>
@@ -38,6 +42,12 @@
             <groupId>com.atlassian.confluence</groupId>
             <artifactId>confluence</artifactId>
             <version>${confluence.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <version>2.0.0</version>
             <scope>provided</scope>
         </dependency>
         
@@ -71,29 +81,11 @@
             <version>4.7</version>
             <scope>test</scope>
         </dependency>
-        <!-- PLM -->
         <dependency>
-            <groupId>com.adaptavist.plm.plugin</groupId>
-            <artifactId>plm-plugin-common</artifactId>
-            <version>${plm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.adaptavist.plm.plugin</groupId>
-            <artifactId>plm-api</artifactId>
-            <version>${plm.version}</version>
+            <groupId>org.springframework.osgi</groupId>
+            <artifactId>spring-osgi-core</artifactId>
+            <version>1.1.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <!--this is only here for the obr generation-->
-            <groupId>com.adaptavist.plm.plugin</groupId>
-            <artifactId>plm-plugin</artifactId>
-            <version>${plm.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.adaptavist.licensing.cert</groupId>
-            <artifactId>ca-adaptavist-pem</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 	
@@ -102,7 +94,7 @@
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-confluence-plugin</artifactId>
-                <version>3.4-AMPS405</version>
+                <version>3.3</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${confluence.version}</productVersion>
@@ -112,21 +104,6 @@
                     <systemPropertyVariables>
                         <plm.license.dir>${project.build.directory}/license/licenses</plm.license.dir>
                     </systemPropertyVariables>
-
-                    <pluginDependencies>
-                        <pluginDependency>
-                            <groupId>com.adaptavist.plm.plugin</groupId>
-                            <artifactId>plm-plugin</artifactId>
-                        </pluginDependency>
-                    </pluginDependencies>
-
-                    <pluginArtifacts>
-                        <pluginArtifact>
-                            <groupId>com.adaptavist.plm.plugin</groupId>
-                            <artifactId>plm-plugin</artifactId>
-                            <version>${plm.version}</version>
-                        </pluginArtifact>
-                    </pluginArtifacts>
 
                     <products>
                         <product>
@@ -150,7 +127,7 @@
                         <product>
                             <id>confluence</id>
                             <instanceId>confluence3-4</instanceId>
-                            <version>3.4.9</version>
+                            <version>3.4.6</version>
                             <dataVersion>3.2</dataVersion>
                         </product>
                         <product>
@@ -238,7 +215,7 @@
                 <artifactId>maven-clover2-plugin</artifactId>
                 <version>${clover.version}</version>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>com.adaptavist.plm.maven</groupId>
                 <artifactId>maven-plm-license-plugin</artifactId>
                 <version>${plm.version}</version>
@@ -270,7 +247,7 @@
                         </vendor>
                     </vendors>
                 </configuration>
-            </plugin>
+            </plugin-->
         </plugins>
     </build>
         
@@ -288,7 +265,7 @@
     </distributionManagement>
 
     <scm>
-        <developerConnection>scm:svn:https://adaptavist.jira.com/svn/PFTG/trunk</developerConnection>
+        <developerConnection>scm:svn:https://adaptavist.jira.com/svn/ADI/trunk</developerConnection>
     </scm>
 
 </project>
